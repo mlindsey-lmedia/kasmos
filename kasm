@@ -1,24 +1,24 @@
 version: '3.7'
 services:
   kasm:
-    image: kasmweb/remnux-focal-desktop
+    image: kasmweb/remnux-focal-desktop:1.16.1-rolling-daily   # Ensure you're using the correct tag
     container_name: kasm_os
     ports:
       - "5001:5000"   # Map container's port 5000 to host's port 5001
       - "8081:8080"   # Map container's port 8080 to host's port 8081
       - "4431:443"    # Map container's port 443 to host's port 4431
-      - "8888:8888"   # Example: Map container's port 8888 to host's port 8888 (adjust as needed)
+      - "8888:8888"   # Example: Map container's port 8888 to host's port 8888
       - "3000:3000"   # Example: Map container's port 3000 to host's port 3000
     environment:
       - KASM_USER=kasmuser
       - KASM_PASSWORD=kasm_password
     volumes:
-      - /path/to/local/storage:/path/in/container
+      - /path/to/local/storage:/path/in/container   # Replace with your actual local storage path
     restart: unless-stopped
     networks:
-      - kasm_network
+      - kasmos_kasm_network  # Use the existing shared network
     tty: true
 
 networks:
-  kasm_network:
-    driver: bridge
+  kasmos_kasm_network:
+    external: true  # Ensure this uses your existing shared network
